@@ -2,25 +2,31 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const faker = require('faker');
 
 const sfHoods = {
-  1: 'Hayes Valley',
-  2: 'Haight Ashbury',
-  3: 'Nob Hill',
-  4: 'North Beach',
-  5: 'SoMa',
-  6: 'The Mission',
-  7: 'Castro',
-  8: 'Outer Richmond',
-  9: 'Outer Sunset',
-  10: 'Pacific Heights',
-  11: 'Russian Hill',
-  12: 'Chinatown',
-  13: 'Buena Vista',
-  14: 'Fillmore',
-  15: 'Presidio'
+  1: ['Hayes Valley', 95, 98, 1, 4, 1701000],
+  2: ['Haight Ashbury', 84, 96, -3, 1, 1178000],
+  3: ['Nob Hill', 86, 98, 3, -1, 1645000],
+  4: ['North Beach', 95, 87, 4, -2, 1477000],
+  5: ['SoMa', 95, 87, 4, -2, 1477000],
+  6: ['The Mission', 95, 87, 4, -2, 1477000],
+  7: ['Castro', 95, 87, 4, -2, 1477000],
+  8: ['Outer Richmond', 86, 98, 3, -1, 1645000],
+  9: ['Outer Sunset', 86, 98, 3, -1, 1645000],
+  10: ['Pacific Heights', 95, 98, 1, 4, 1701000],
+  11: ['Russian Hill', 95, 98, 1, 4, 1701000],
+  12: ['Chinatown', 95, 98, 1, 4, 1701000],
+  13: ['Buena Vista', 95, 98, 1, 4, 1701000],
+  14: ['Fillmore', 95, 98, 1, 4, 1701000],
+  15: ['Presidio', 95, 98, 1, 4, 1701000]
 };
 
 for (let h = 16; h <= 100000; h++) {
-  sfHoods[h] = faker.name.lastName();
+  sfHoods[h] = [];
+  sfHoods[h][0] = faker.name.lastName();
+  sfHoods[h][1] = faker.random.number({ min: 70, max: 99 });
+  sfHoods[h][2] = faker.random.number({ min: 70, max: 99 });
+  sfHoods[h][3] = faker.random.number({ min: -3, max: 4 });
+  sfHoods[h][4] = faker.random.number({ min: -3, max: 4 });
+  sfHoods[h][5] = faker.random.number({ min: 1100, max: 2200 }) * 1000;
 }
 
 // let neighborhoodId = () => { return Math.floor(Math.random() * Math.floor(14)) + 1 };
@@ -57,12 +63,12 @@ for (let i = 1; i <= 10; i++) {
     let entry = {};
     counter++;
     entry.hood_id = faker.random.number({ min: 1, max: 100000 });
-    entry.hood_name = sfHoods[entry.hood_id];
-    entry.transit_score = faker.random.number({ min: 70, max: 99 });
-    entry.walk_score = faker.random.number({ min: 70, max: 99 });
-    entry.value_past = faker.random.number({ min: -3, max: 4 });
-    entry.value_future = faker.random.number({ min: -3, max: 4 });
-    entry.median_value = faker.random.number({ min: 1100, max: 2200 }) * 1000;
+    entry.hood_name = sfHoods[entry.hood_id][0];
+    entry.transit_score = sfHoods[entry.hood_id][1];
+    entry.walk_score = sfHoods[entry.hood_id][2];
+    entry.value_past = sfHoods[entry.hood_id][3];
+    entry.value_future = sfHoods[entry.hood_id][4];
+    entry.median_value = sfHoods[entry.hood_id][5];
     entry.house_id = counter;
     entry.home_cost = Math.round((Math.floor(entry.median_value * faker.finance.amount(1.10, 1.30, 2))) / 1000) * 1000;
     entry.bedrooms = faker.random.number({ min: 3, max: 6 });

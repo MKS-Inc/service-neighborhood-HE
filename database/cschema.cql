@@ -26,7 +26,7 @@ CREATE TABLE neighborhoods_houses (
 CREATE TABLE users_houses (
   user_id int,
   user_name text,
-  hood_id uuid,
+  hood_id int,
   hood_name text,
   transit_score int,
   walk_score int,
