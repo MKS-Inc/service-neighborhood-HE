@@ -5,6 +5,7 @@
 /* eslint-disable react/no-unused-state */
 import React from 'react';
 import axios from 'axios';
+import faker from 'faker';
 import Scores from './Scores.jsx';
 import Stats from './Stats.jsx';
 import SeeMore from './SeeMore.jsx';
@@ -23,20 +24,18 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getHouseData();
+    let randomId = faker.random.number({ min: 1, max: 100000 });
+    this.getNeighborhoodData(randomId);
   }
 
-  getNeighborhoodData(neighborhood) {
-    axios.get('/api/neighborhoods', {
-      params: {
-        name: neighborhood,
-      },
-    })
-      .then((response) => {
+  getNeighborhoodData(hood_id) {
+    axios.get(`/api/neighborhood/${hood_id}`)
+      .then((res) => {
         const { house } = this.state;
+        console.log(res.data)
         this.setState({
           house: { ...house },
-          houses: response.data,
+          houses: res.data,
           neighborhood: response.data[0],
         });
         // console.log(response.data[0]);
