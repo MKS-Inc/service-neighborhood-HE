@@ -10,35 +10,36 @@ start server - run command: $ npm start
 
 #### Recieve Neighborhood Data and Nearby Homes for specefic Neighborhood
 ```
-GET /api/neighborhood/id
+GET /api/neighborhood/:id
 ```
 
 ### UPDATE
 
 #### Update Neighborhood Info
 ```
-PUT /api/neighborhood/id/{column}/{change}
+PUT /api/neighborhood/:id/
 ```
+- Example Data Parameters: ` {walk_score: 88, transit_score: 90} `
 
 ### CREATE
 
 #### Add house Listing to users Liked List
  
 ```
-PUT /api/likes/{user_id}/{house_id}
+PUT /api/likes/:user_id/:house_id
 ```
 
 #### Create New User
 
 ```
-PUT /api/users/{user_name}
+PUT /api/users/:user_name
 ```
 
 ### DELETE
 
 #### Delete House From like List
 ```
-DELETE /api/likes/{user_id}/{house_id}
+DELETE /api/likes/:user_id/:house_id
 ```
 
 '

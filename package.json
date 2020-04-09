@@ -9,9 +9,8 @@
     "test:coverage": "jest --coverage --colors",
     "build:react": "webpack -d --watch",
     "start": "node server/index.js",
-    "start-dev": "node server/index.js",
-    "populateNeighborhoods": "node database/fakerPopulateNeighborhoods.js",
-    "populateHouses": "node database/fakerPopulateHouses.js"
+    "hoodData": "node --max-old-space-size=16000 database/seeding_schema/pgHoodData.js",
+    "houseData": "node --max-old-space-size=16000 database/seeding_schema/pgHouseData.js"
   },
   "repository": {
     "type": "git",
