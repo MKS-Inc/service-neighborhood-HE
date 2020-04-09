@@ -8,68 +8,38 @@ start server - run command: $ npm start
 
 ### READ
 
-#### Recieve All House Listings
+#### Recieve Neighborhood Data and Nearby Homes for specefic Neighborhood
 ```
-GET /api/houses
+GET /api/neighborhood/id
 ```
-
-#### Recieve Sepcefic House Listing by House ID
-```
-GET /api/houses/id
-```
-
-#### Recieve Heart Status for House Listing
-```
-GET /api/houses/id/heart
-```
-
-#### Recieve Neighborhood Data of Specified Neighborhood
-```
-GET /api/neighborhoods/id
-```
-
-#### Recieve House Listings in Specified Neighborhood
-```
-GET /api/neighborhoods/id/houses
-```
-
 
 ### UPDATE
 
-#### Update House Listing's Heart Status
+#### Update Neighborhood Info
 ```
-PUT /api/houses/id/heart
-PUT /api/:houseid/heart 
- PUT /api/{houseid}/heart
+PUT /api/neighborhood/id/{column}/{change}
 ```
 
 ### CREATE
 
-#### Create New House Listing
-
-Request body: 
+#### Add house Listing to users Liked List
+ 
 ```
-PUT /api/houses
-{
-  neighborhood: string, 
-  home_cost: int, 
-  bedrooms: int, 
-  bathrooms: int, 
-  home_address: string, 
-  sf: int, 
-  home_image: string - (url)
-}
+PUT /api/likes/{user_id}/{house_id}
+```
+
+#### Create New User
+
+```
+PUT /api/users/{user_name}
 ```
 
 ### DELETE
 
-#### Delete Existing House Listing
+#### Delete House From like List
 ```
-DELETE /api/houses/id
+DELETE /api/likes/{user_id}/{house_id}
 ```
-
-PUT /api/:houseid/heart 
- PUT /api/{houseid}/heart
 
 '
 
