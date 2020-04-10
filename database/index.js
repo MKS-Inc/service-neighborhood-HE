@@ -1,102 +1,53 @@
-/* eslint-disable consistent-return */
-/* eslint-disable arrow-body-style */
-/* eslint-disable no-unused-vars */
-const mysql = require('mysql');
-const bodyParser = require('body-parser');
-const express = require('express');
+const pgp = require('pg-promise')(/* options */)
+const connection = {host: 'localhost', database: 'neighborhood_component'}
+const postgres = pgp(connection)
+postgres.connect();
 
-const app = express();
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'secret',
-  database: 'abode',
-});
+exports.getNeighborhood = (id, callback) => {
+  console.log('your friendly neighborhood query!')
+  postgres.any('SELECT * FROM neighborhoods_table INNER JOIN houses_table ON (houses_table.hood_id = neighborhoods_table.hood_id) WHERE neighborhoods_table.hood_id = $1', id)
+    .then((data) => {
+      console.log('sucessful query!')
+      callback(null, data);
+    })
+    .catch((err) => {
+      console.log('something is wrong', err)
+      callback(err);
+    })
+}
 
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to the mySQL database');
-});
+exports.updateNeighborhood = (id, updates, callback) => {
+  let table = 'neighborhoods_table';
+  let updateQuery = pgp.helpers.update(updates, null, table);
+  console.log(updateQuery)
+  postgres.any(updateQuery + ' WHERE hood_id = $1', id)
+    .then(() => {
+      callback();
+    })
+    .catch((err) => {
+      callback(err);
+    })
+}
 
-const getThisNeighborhoodData = (neighborhood) => {
-  return new Promise((resolve, reject) => {
-    const queryStr = `SELECT * FROM neighborhoods WHERE neighborhood = "${neighborhood}"`;
-    connection.query(queryStr, (err, result, fields) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(result);
-    });
-  });
-};
+exports.addToLikedHomes = (params, callback) => {
+  let insertQuery = pgp.helpers.insert(params, null, 'user_houses_table');
+  console.log(insertQuery)
+  postgres.any(insertQuery)
+    .then(() => {
+      callback(null);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+}
 
-const getAllNeighborhoodData = (neighborhood) => {
-  return new Promise((resolve, reject) => {
-    const queryStr = 'SELECT * FROM neighborhoods';
-    connection.query(queryStr, (err, result, fields) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(result);
-    });
-  });
-};
-
-const getAllHouseData = () => {
-  return new Promise((resolve, reject) => {
-    const queryStr = 'SELECT * FROM houses';
-    connection.query(queryStr, (err, result, fields) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(result);
-    });
-  });
-};
-
-const getAllNeighborhoodHouses = (neighborhood) => {
-  return new Promise((resolve, reject) => {
-    const queryStr = `SELECT * FROM houses WHERE neighborhood = "${neighborhood}"`;
-    connection.query(queryStr, (err, result, fields) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(result);
-    });
-  });
-};
-
-const updateHeart = (houseId) => {
-  return new Promise((resolve, reject) => {
-    const queryStr = `UPDATE houses SET heart_filled = !heart_filled WHERE id = "${houseId}"`;
-    connection.query(queryStr, (err, result, fields) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(result);
-    });
-  });
-};
-
-const getHeartData = (id) => {
-  return new Promise((resolve, reject) => {
-    const queryStr = `SELECT heart_filled FROM houses WHERE id = "${id}"`;
-    connection.query(queryStr, (err, result, fields) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve(result);
-    });
-  });
-};
-
-module.exports = {
-  connection,
-  getThisNeighborhoodData,
-  getAllNeighborhoodData,
-  getAllHouseData,
-  getAllNeighborhoodHouses,
-  updateHeart,
-  getHeartData,
-};
+exports.removeFromLikedHomes = (user, house, callback) => {
+  postgres.any('DELETE FROM user_houses_table WHERE user_id = $1 AND house = $2', [user, house])
+    .then(() => {
+      callback(null);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+}

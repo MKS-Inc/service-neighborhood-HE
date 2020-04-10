@@ -5,6 +5,7 @@
 /* eslint-disable react/no-unused-state */
 import React from 'react';
 import axios from 'axios';
+import faker from 'faker';
 import Scores from './Scores.jsx';
 import Stats from './Stats.jsx';
 import SeeMore from './SeeMore.jsx';
@@ -15,65 +16,29 @@ class App extends React.Component {
 
     this.state = {
       house: {},
-      houses: [],
-      neighborhood: {},
+      // houses: [],
+      neighborhood: [],
     };
-    this.getHouseData = this.getHouseData.bind(this);
     this.getNeighborhoodData = this.getNeighborhoodData.bind(this);
   }
 
   componentDidMount() {
-    this.getHouseData();
+    let randomId = faker.random.number({ min: 1, max: 100000 });
+    this.getNeighborhoodData(randomId);
   }
 
-  getNeighborhoodData(neighborhood) {
-    axios.get('/api/neighborhoods', {
-      params: {
-        name: neighborhood,
-      },
-    })
-      .then((response) => {
-        const { house } = this.state;
+  getNeighborhoodData(hood_id) {
+    axios.get(`/api/neighborhood/${hood_id}`)
+      .then((res) => {
+        // console.log(res.data)
         this.setState({
-          house: { ...house },
-          houses: response.data,
-          neighborhood: response.data[0],
+          house: res.data[0],
+          neighborhood: res.data,
         });
-        // console.log(response.data[0]);
       })
       .catch((err) => {
         throw err;
       });
-  }
-
-  getHouseData() {
-    axios.get('/api/houses')
-      .then((response) => {
-        const { house, neighborhood } = this.state;
-        if (!Object.keys(house).length) {
-          this.setState({
-            house: response.data[0],
-            houses: response.data,
-            neighborhood: { ...neighborhood },
-          });
-          // console.log(this.state.houses);
-        } else {
-          this.setState({
-            house: { ...house },
-            houses: { ...response.data },
-            neighborhood: { ...neighborhood },
-          });
-        }
-        this.getNeighborhoodData(this.state.house.neighborhood);
-      })
-      .catch((err) => {
-        throw err;
-      });
-  }
-
-  currentHouse(setHouse) {
-    const { houses } = this.state;
-    this.setState({ house: setHouse, houses: [...houses] });
   }
 
   render() {
@@ -90,7 +55,7 @@ class App extends React.Component {
     return (
       <div id="appContainer">
         <h2 id="neighborhoodHeader">
-          Neighborhood: {currentHouse ? currentHouse.neighborhood : ''}
+          Neighborhood: {house ? house.hood_name : ''}
         </h2>
         {scores}
         {stats}

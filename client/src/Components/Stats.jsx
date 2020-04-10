@@ -10,9 +10,9 @@ const Stats = ({ neighborhood, house }) => {
   let incDecArrowPast;
   let incDecPast = 'incDec';
 
-  if (neighborhood.value_inc_dec_past === 0) {
+  if (house.value_past === 0) {
     incDecWordPast = 'changed';
-  } else if (neighborhood.value_inc_dec_past > 0) {
+  } else if (house.value_past > 0) {
     incDecWordPast = 'risen';
     incDecArrowPast = '↑';
     incDecPast = 'inc';
@@ -25,11 +25,11 @@ const Stats = ({ neighborhood, house }) => {
   let incDecWordFuture;
   let incDecArrowFuture;
   let incDecFuture = 'incDec';
-  const mathAbs = Math.abs(neighborhood.value_inc_dec_future);
+  const mathAbs = Math.abs(house.value_future);
 
-  if (neighborhood.value_inc_dec_future === 0) {
+  if (house.value_future === 0) {
     incDecWordFuture = 'remain the same';
-  } else if (neighborhood.value_inc_dec_future > 0) {
+  } else if (house.value_future > 0) {
     incDecWordFuture = 'increase';
     incDecArrowFuture = '↑';
     incDecFuture = 'inc';
@@ -44,14 +44,14 @@ const Stats = ({ neighborhood, house }) => {
   let incDecArrowMedian;
   let higherLower;
 
-  if (house.home_cost > neighborhood.median_value) {
-    const diff = house.home_cost - neighborhood.median_value;
-    percentDiff = ((diff / neighborhood.median_value) * 100).toFixed(1);
+  if (house.home_cost > house.median_value) {
+    const diff = house.home_cost - house.median_value;
+    percentDiff = ((diff / house.median_value) * 100).toFixed(1);
     incDecMedian = 'inc';
     incDecArrowMedian = '↑';
     higherLower = 'higher';
   } else {
-    const diff = neighborhood.median_value - house.home_cost;
+    const diff = house.median_value - house.home_cost;
     percentDiff = Math.abs(((diff / house.home_cost) * 100).toFixed(1));
     incDecMedian = 'dec';
     incDecArrowMedian = '↓';
@@ -83,20 +83,20 @@ const Stats = ({ neighborhood, house }) => {
         <div className="statslistItem">
           <li>
             <span className="homeValues">Home values</span>
-            <span> in {neighborhood.neighborhood} have </span>
+            <span> in {house.hood_name} have </span>
             <span className={incDecPast}>{incDecWordPast}</span>
-            <span className={incDecPast}> {Math.abs(neighborhood.value_inc_dec_past)}%</span>
-            <span className={neighborhood.value_inc_dec_past ? incDecPast : 'hidden'}> ({incDecArrowPast})</span>
+            <span className={incDecPast}> {Math.abs(house.value_past)}%</span>
+            <span className={house.value_past ? incDecPast : 'hidden'}> ({incDecArrowPast})</span>
             <span> over the past 12 months.</span>
           </li>
         </div>
         <div className="statslistItem">
           <li>
             <span>Abode predicts the home values in</span>
-            <span> {neighborhood.neighborhood} will</span>
+            <span> {house.hood_name} will</span>
             <span className={incDecFuture}> {incDecWordFuture}</span>
-            <span className={neighborhood.value_inc_dec_future ? incDecFuture : 'hidden'}> {mathAbs}%</span>
-            <span className={neighborhood.value_inc_dec_future ? incDecFuture : 'hidden'}> ({incDecArrowFuture})</span>
+            <span className={house.value_future ? incDecFuture : 'hidden'}> {mathAbs}%</span>
+            <span className={house.value_future ? incDecFuture : 'hidden'}> ({incDecArrowFuture})</span>
             <span> in the next year.</span>
           </li>
         </div>
@@ -106,7 +106,7 @@ const Stats = ({ neighborhood, house }) => {
             <span className={incDecMedian}> {percentDiff}%</span>
             <span className={incDecMedian}> {higherLower} ({incDecArrowMedian})</span>
             <span> than the median home in</span>
-            <span> {neighborhood.neighborhood}.</span>
+            <span> {house.hood_name}.</span>
           </li>
         </div>
         <div className="statslistItem">
@@ -120,7 +120,7 @@ const Stats = ({ neighborhood, house }) => {
             <span className="abodestimate" onClick={onClickModal}>median Abodestimate</span>
             <span><sup>®</sup></span>
             <span> for this neighborhood is</span>
-            <span> ${Number(neighborhood.median_value).toLocaleString()}.</span>
+            <span> ${Number(house.median_value).toLocaleString()}.</span>
           </li>
         </div>
       </ul>
