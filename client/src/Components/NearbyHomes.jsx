@@ -11,37 +11,37 @@ class NearbyHomes extends React.Component {
     super(props);
 
     this.state = {
-      nearbyHomes: [],
+      nearbyHomes: this.props.neighborhood,
       position: -162,
       cardCount: 0,
       leftDisabled: true,
       rightDisabled: false,
     };
 
-    this.getHouseData = this.getHouseData.bind(this);
+    // this.getHouseData = this.getHouseData.bind(this);
     this.clickCarouselLeft = this.clickCarouselLeft.bind(this);
     this.clickCarouselRight = this.clickCarouselRight.bind(this);
   }
 
 
-  componentDidMount() {
-    const { neighborhood } = this.props;
+  // componentDidMount() {
+  //   const { neighborhood } = this.props;
 
-    this.getHouseData(neighborhood);
-  }
+  //   this.getHouseData(neighborhood);
+  // }
 
-  getHouseData(neighborhood) {
-    Axios.get('/api/houses', {
-      params: {
-        name: neighborhood.neighborhood,
-      },
-    })
-      .then((response) => {
-        this.setState({
-          nearbyHomes: response.data,
-        });
-      });
-  }
+  // getHouseData(neighborhood) {
+  //   Axios.get('/api/houses', {
+  //     params: {
+  //       name: neighborhood.neighborhood,
+  //     },
+  //   })
+  //     .then((response) => {
+  //       this.setState({
+  //         nearbyHomes: response.data,
+  //       });
+  //     });
+  // }
 
   clickCarouselLeft() {
     const { position, cardCount, rightDisabled } = this.state;

@@ -30,7 +30,7 @@ class App extends React.Component {
   getNeighborhoodData(hood_id) {
     axios.get(`/api/neighborhood/${hood_id}`)
       .then((res) => {
-        console.log(res.data)
+        // console.log(res.data)
         this.setState({
           house: res.data[0],
           neighborhood: res.data,
