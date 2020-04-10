@@ -4,7 +4,7 @@ const postgres = pgp(connection)
 postgres.connect();
 
 
-const getNeighborhood = (id, callback) => {
+exports.getNeighborhood = (id, callback) => {
   console.log('your friendly neighborhood query!')
   postgres.any('SELECT * FROM neighborhoods_table INNER JOIN houses_table ON (houses_table.hood_id = neighborhoods_table.hood_id) WHERE neighborhoods_table.hood_id = $1', id)
     .then((data) => {
@@ -17,7 +17,37 @@ const getNeighborhood = (id, callback) => {
     })
 }
 
+exports.updateNeighborhood = (id, updates, callback) => {
+  let table = 'neighborhoods_table';
+  let updateQuery = pgp.helpers.update(updates, null, table);
+  console.log(updateQuery)
+  postgres.any(updateQuery + ' WHERE hood_id = $1', id)
+    .then(() => {
+      callback();
+    })
+    .catch((err) => {
+      callback(err);
+    })
+}
 
-module.exports = {
-  getNeighborhood
-};
+exports.addToLikedHomes = (params, callback) => {
+  let insertQuery = pgp.helpers.insert(params, null, 'user_houses_table');
+  console.log(insertQuery)
+  postgres.any(insertQuery)
+    .then(() => {
+      callback(null);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+}
+
+exports.removeFromLikedHomes = (user, house, callback) => {
+  postgres.any('DELETE FROM user_houses_table WHERE user_id = $1 AND house = $2', [user, house])
+    .then(() => {
+      callback(null);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+}

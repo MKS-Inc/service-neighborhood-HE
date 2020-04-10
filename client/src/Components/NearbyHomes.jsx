@@ -115,7 +115,7 @@ class NearbyHomes extends React.Component {
     let allNearby = <div />;
 
     if (nearbyHomes.length) {
-      allNearby = nearbyHomes.map((home) => <NearbyHomeCard home={home} id={home.id} key={home.id} />);
+      allNearby = nearbyHomes.map((home) => <NearbyHomeCard home={home} id={home.house_id} key={home.house_id} />);
     }
     return (
       <div className="carouselContainer">

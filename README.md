@@ -26,7 +26,7 @@ PUT /api/neighborhood/:id/
 #### Add house Listing to users Liked List
  
 ```
-PUT /api/likes/:user_id/:house_id
+PUT /api/likes/:user_id/:house
 ```
 
 #### Create New User
@@ -39,7 +39,7 @@ PUT /api/users/:user_name
 
 #### Delete House From like List
 ```
-DELETE /api/likes/:user_id/:house_id
+DELETE /api/likes/:user_id/:house
 ```
 
 '

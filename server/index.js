@@ -14,9 +14,7 @@ app.listen(port, () => {
 });
 
 
-
-
-
+// Recieve Neighborhood Data and Nearby Homes for specefic Neighborhood
 app.get('/api/neighborhood/:id', (req, res) => {
   console.log('your friendly neighborhood get request!')
   let id = req.params.id
@@ -29,3 +27,56 @@ app.get('/api/neighborhood/:id', (req, res) => {
   })
 })
 
+// Update Neighborhood Info
+app.put('/api/neighborhood/:id', (req, res) => {
+  console.log('your friendly neighborhood get request!')
+  let params = req.params;
+  let id = req.params.id;
+  db.updateNeighborhood(id, params, (err) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(200);
+    }
+  })
+})
+
+// Add house Listing to users Liked List
+app.put('/api/likes/:user_id/:house', (req, res) => {
+  console.log('your friendly neighborhood get request!')
+  let params = req.params;
+  db.addToLikedHomes(params, (err, data) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.send(data);
+    }
+  })
+})
+
+// Delete House From like List
+app.delete('/api/likes/:user_id/:house_id', (req, res) => {
+  console.log('your friendly neighborhood get request!')
+  let userId = req.params.user_id;
+  let houseId = req.params.house_id;
+  db.removeFromLikedHomes(userId, houseId, (err, data) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.send(data);
+    }
+  })
+})
+
+// Create New User
+app.put('/api/users/:user_name', (req, res) => {
+  console.log('your friendly neighborhood get request!')
+  let username = req.params.user_name;
+  db.createNewUser(username, (err) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.sendStatus(200);
+    }
+  })
+})
