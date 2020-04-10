@@ -31,47 +31,15 @@ class App extends React.Component {
     axios.get(`/api/neighborhood/${hood_id}`)
       .then((res) => {
         console.log(res.data)
-        // use destructuring to create a neighborhood info obj.
         this.setState({
           house: res.data[0],
           neighborhood: res.data,
         });
-        // console.log(response.data[0]);
       })
       .catch((err) => {
         throw err;
       });
   }
-
-  // getHouseData() {
-  //   axios.get('/api/houses')
-  //     .then((response) => {
-  //       const { house, neighborhood } = this.state;
-  //       if (!Object.keys(house).length) {
-  //         this.setState({
-  //           house: response.data[0],
-  //           houses: response.data,
-  //           neighborhood: { ...neighborhood },
-  //         });
-  //         // console.log(this.state.houses);
-  //       } else {
-  //         this.setState({
-  //           house: { ...house },
-  //           houses: { ...response.data },
-  //           neighborhood: { ...neighborhood },
-  //         });
-  //       }
-  //       this.getNeighborhoodData(this.state.house.neighborhood);
-  //     })
-  //     .catch((err) => {
-  //       throw err;
-  //     });
-  // }
-
-  // currentHouse(setHouse) {
-  //   const { houses } = this.state;
-  //   this.setState({ house: setHouse, houses: [...houses] });
-  // }
 
   render() {
     const { house, neighborhood } = this.state;
@@ -87,7 +55,7 @@ class App extends React.Component {
     return (
       <div id="appContainer">
         <h2 id="neighborhoodHeader">
-          Neighborhood: {currentHouse ? currentHouse.neighborhood : ''}
+          Neighborhood: {house ? house.hood_name : ''}
         </h2>
         {scores}
         {stats}
