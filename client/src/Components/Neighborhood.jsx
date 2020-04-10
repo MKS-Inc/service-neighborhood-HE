@@ -16,10 +16,9 @@ class App extends React.Component {
 
     this.state = {
       house: {},
-      houses: [],
-      neighborhood: {},
+      // houses: [],
+      neighborhood: [],
     };
-    this.getHouseData = this.getHouseData.bind(this);
     this.getNeighborhoodData = this.getNeighborhoodData.bind(this);
   }
 
@@ -31,12 +30,11 @@ class App extends React.Component {
   getNeighborhoodData(hood_id) {
     axios.get(`/api/neighborhood/${hood_id}`)
       .then((res) => {
-        const { house } = this.state;
         console.log(res.data)
+        // use destructuring to create a neighborhood info obj.
         this.setState({
-          house: { ...house },
-          houses: res.data,
-          neighborhood: response.data[0],
+          house: res.data[0],
+          neighborhood: res.data,
         });
         // console.log(response.data[0]);
       })
@@ -45,35 +43,35 @@ class App extends React.Component {
       });
   }
 
-  getHouseData() {
-    axios.get('/api/houses')
-      .then((response) => {
-        const { house, neighborhood } = this.state;
-        if (!Object.keys(house).length) {
-          this.setState({
-            house: response.data[0],
-            houses: response.data,
-            neighborhood: { ...neighborhood },
-          });
-          // console.log(this.state.houses);
-        } else {
-          this.setState({
-            house: { ...house },
-            houses: { ...response.data },
-            neighborhood: { ...neighborhood },
-          });
-        }
-        this.getNeighborhoodData(this.state.house.neighborhood);
-      })
-      .catch((err) => {
-        throw err;
-      });
-  }
+  // getHouseData() {
+  //   axios.get('/api/houses')
+  //     .then((response) => {
+  //       const { house, neighborhood } = this.state;
+  //       if (!Object.keys(house).length) {
+  //         this.setState({
+  //           house: response.data[0],
+  //           houses: response.data,
+  //           neighborhood: { ...neighborhood },
+  //         });
+  //         // console.log(this.state.houses);
+  //       } else {
+  //         this.setState({
+  //           house: { ...house },
+  //           houses: { ...response.data },
+  //           neighborhood: { ...neighborhood },
+  //         });
+  //       }
+  //       this.getNeighborhoodData(this.state.house.neighborhood);
+  //     })
+  //     .catch((err) => {
+  //       throw err;
+  //     });
+  // }
 
-  currentHouse(setHouse) {
-    const { houses } = this.state;
-    this.setState({ house: setHouse, houses: [...houses] });
-  }
+  // currentHouse(setHouse) {
+  //   const { houses } = this.state;
+  //   this.setState({ house: setHouse, houses: [...houses] });
+  // }
 
   render() {
     const { house, neighborhood } = this.state;
