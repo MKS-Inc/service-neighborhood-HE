@@ -17,7 +17,7 @@ app.listen(port, () => {
 
 // Recieve Neighborhood Data and Nearby Homes for specefic Neighborhood
 app.get('/api/neighborhood/:id', (req, res) => {
-  console.log('your friendly neighborhood get request!')
+  // console.log('your friendly neighborhood get request!')
   let id = req.params.id
   db.getNeighborhood(id, (err, data) => {
     if (err) {
@@ -28,9 +28,22 @@ app.get('/api/neighborhood/:id', (req, res) => {
   })
 })
 
+// just get one neighborhoods data
+app.get('/api/neighborhood/data/:id', (req, res) => {
+  // console.log('your friendly neighborhood get request!')
+  let id = req.params.id
+  db.getNeighborhoodData(id, (err, data) => {
+    if (err) {
+      res.sendStatus(400);
+    } else {
+      res.send(data);
+    }
+  })
+})
+
 // Update Neighborhood Info
 app.put('/api/neighborhood/:id', (req, res) => {
-  console.log('your friendly neighborhood get request!')
+  // console.log('your friendly neighborhood get request!')
   let params = req.params;
   let id = req.params.id;
   db.updateNeighborhood(id, params, (err) => {
@@ -43,8 +56,8 @@ app.put('/api/neighborhood/:id', (req, res) => {
 })
 
 // Add house Listing to users Liked List
-app.put('/api/likes/:user_id/:house', (req, res) => {
-  console.log('your friendly neighborhood get request!')
+app.post('/api/likes/:user_id/:house', (req, res) => {
+  // console.log('your friendly neighborhood get request!')
   let params = req.params;
   db.addToLikedHomes(params, (err, data) => {
     if (err) {
@@ -57,7 +70,7 @@ app.put('/api/likes/:user_id/:house', (req, res) => {
 
 // Delete House From like List
 app.delete('/api/likes/:user_id/:house_id', (req, res) => {
-  console.log('your friendly neighborhood get request!')
+  // console.log('your friendly neighborhood get request!')
   let userId = req.params.user_id;
   let houseId = req.params.house_id;
   db.removeFromLikedHomes(userId, houseId, (err, data) => {
@@ -71,7 +84,7 @@ app.delete('/api/likes/:user_id/:house_id', (req, res) => {
 
 // Create New User
 app.put('/api/users/:user_name', (req, res) => {
-  console.log('your friendly neighborhood get request!')
+  // console.log('your friendly neighborhood get request!')
   let username = req.params.user_name;
   db.createNewUser(username, (err) => {
     if (err) {

@@ -3,16 +3,29 @@ const connection = {host: 'localhost', database: 'neighborhood_component'}
 const postgres = pgp(connection)
 postgres.connect();
 
-
+// get all neighborhood data
 exports.getNeighborhood = (id, callback) => {
-  console.log('your friendly neighborhood query!')
+  // console.log('your friendly neighborhood query!')
   postgres.any('SELECT * FROM neighborhoods_table INNER JOIN houses_table ON (houses_table.hood_id = neighborhoods_table.hood_id) WHERE neighborhoods_table.hood_id = $1', id)
     .then((data) => {
-      console.log('sucessful query!')
+      // console.log('sucessful query!')
       callback(null, data);
     })
     .catch((err) => {
-      console.log('something is wrong', err)
+      // console.log('something is wrong', err)
+      callback(err);
+    })
+}
+
+exports.getNeighborhoodData = (id, callback) => {
+  // console.log('your friendly neighborhood query!')
+  postgres.any('SELECT * FROM neighborhoods_table WHERE neighborhoods_table.hood_id = $1', id)
+    .then((data) => {
+      // console.log('sucessful query!')
+      callback(null, data);
+    })
+    .catch((err) => {
+      // console.log('something is wrong', err)
       callback(err);
     })
 }
