@@ -1,20 +1,21 @@
-import http from 'k6/http';
+const http = require('k6/http');
 
 export let options = {
-  vus: 1000,
-  // rps: 1000,
-  duration: '5s',
+  vus: 200,
+  rps: 1000,
+  duration: '10s',
   discardResponseBodies: true,
 };
 
 export default function() {
 
-    let hoodid = Math.floor(Math.random() * Math.floor(100000));
+    // let hoodid = faker.random.number({ min: 1, max: 100000 });
+    let hoodid = Math.floor(Math.random() * Math.floor(999999)) + 1;
     let houseid = Math.floor(Math.random() * Math.floor(10000000));
     let userid = Math.floor(Math.random() * Math.floor(10));
 
-    for (let i = 0; i < 5; i++) {
-      http.get(`http://localhost:3001/api/neighborhood/${hoodid}`);
+    for (let i = 0; i < 10; i++) {
+      http.get(`http://localhost:3001/api/neighborhood/1`);
     }
 
     http.post(`http://localhost:3001/api/likes/${userid}/${houseid}`)

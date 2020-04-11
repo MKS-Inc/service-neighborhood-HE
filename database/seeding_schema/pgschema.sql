@@ -23,8 +23,10 @@ CREATE TABLE houses_table(
   state VARCHAR(13),
   zipcode INTEGER,
   square_feet INTEGER,
-  house_img VARCHAR (8)
+  house_img INTEGER
 );
+
+CREATE INDEX house_hood ON houses_table (hood_id);
 
 CREATE TABLE users_table(
   user_id SERIAL PRIMARY KEY,
@@ -35,3 +37,5 @@ CREATE TABLE user_houses_table(
   user_id INTEGER REFERENCES users_table(user_id) ON UPDATE CASCADE ON DELETE CASCADE,
   house INTEGER REFERENCES houses_table(house_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+CREATE INDEX user_likes ON user_houses_table (user_id);

@@ -90,7 +90,7 @@ class NearbyHomeCard extends React.Component {
     return (
       <div className="houseCard">
         <div className="cardImageContainer">
-          <img src={`https://hrfecimages.s3-us-west-1.amazonaws.com/${home.house_img}`} alt="home" className="cardImage" />
+          <img src={`https://sdcneighborhood.s3-us-west-1.amazonaws.com/${home.house_img}.jpg`} alt="home" className="cardImage" />
         </div>
         <div onClick={() => this.handleHeartClick(id)}>{heart}</div>
         <div className="cardInfo">

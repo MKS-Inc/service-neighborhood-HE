@@ -9,6 +9,7 @@
     "test:coverage": "jest --coverage --colors",
     "build:react": "webpack -d --watch",
     "start": "nodemon server/index.js",
+    "stress": "k6 run stressTests/getscript.js",
     "hoodData": "node --max-old-space-size=16000 database/seeding_schema/pgHoodData.js",
     "houseData": "node --max-old-space-size=16000 database/seeding_schema/pgHouseData.js"
   },

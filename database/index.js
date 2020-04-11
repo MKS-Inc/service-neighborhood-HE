@@ -6,7 +6,7 @@ postgres.connect();
 // get all neighborhood data
 exports.getNeighborhood = (id, callback) => {
   // console.log('your friendly neighborhood query!')
-  postgres.any('SELECT * FROM neighborhoods_table INNER JOIN houses_table ON (houses_table.hood_id = neighborhoods_table.hood_id) WHERE neighborhoods_table.hood_id = $1', id)
+  postgres.any('SELECT * FROM neighborhoods_table INNER JOIN houses_table ON (houses_table.hood_id = neighborhoods_table.hood_id) WHERE neighborhoods_table.hood_id = $1 LIMIT 12', id)
     .then((data) => {
       // console.log('sucessful query!')
       callback(null, data);
@@ -28,12 +28,12 @@ exports.getNeighborhoodData = (id, callback) => {
       // console.log('something is wrong', err)
       callback(err);
     })
-}
+} 
 
 exports.updateNeighborhood = (id, updates, callback) => {
   let table = 'neighborhoods_table';
   let updateQuery = pgp.helpers.update(updates, null, table);
-  console.log(updateQuery)
+  // console.log(updateQuery)
   postgres.any(updateQuery + ' WHERE hood_id = $1', id)
     .then(() => {
       callback();
@@ -45,7 +45,7 @@ exports.updateNeighborhood = (id, updates, callback) => {
 
 exports.addToLikedHomes = (params, callback) => {
   let insertQuery = pgp.helpers.insert(params, null, 'user_houses_table');
-  console.log(insertQuery)
+  // console.log(insertQuery)
   postgres.any(insertQuery)
     .then(() => {
       callback(null);

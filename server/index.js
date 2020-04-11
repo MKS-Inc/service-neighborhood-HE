@@ -1,6 +1,7 @@
 require('newrelic');
 const express = require('express');
 const bodyParser = require('body-parser');
+const faker = require('faker');
 
 const db = require('../database')
 
@@ -19,6 +20,7 @@ app.listen(port, () => {
 app.get('/api/neighborhood/:id', (req, res) => {
   // console.log('your friendly neighborhood get request!')
   let id = req.params.id
+  // let id = faker.random.number({ min: 1, max: 100000 })
   db.getNeighborhood(id, (err, data) => {
     if (err) {
       res.sendStatus(400);
@@ -31,7 +33,8 @@ app.get('/api/neighborhood/:id', (req, res) => {
 // just get one neighborhoods data
 app.get('/api/neighborhood/data/:id', (req, res) => {
   // console.log('your friendly neighborhood get request!')
-  let id = req.params.id
+  // let id = req.params.id
+  let id = faker.random.number({ min: 1, max: 100000 })
   db.getNeighborhoodData(id, (err, data) => {
     if (err) {
       res.sendStatus(400);
