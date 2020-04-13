@@ -1,5 +1,5 @@
 const pgp = require('pg-promise')(/* options */)
-const connection = {host: 'localhost', database: 'neighborhood_component'}
+const connection = {host: 'ec2-54-183-161-27.us-west-1.compute.amazonaws.com', database: 'neighborhood_component'}
 const postgres = pgp(connection)
 postgres.connect();
 
