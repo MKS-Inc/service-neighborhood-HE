@@ -9,6 +9,7 @@
     "test:coverage": "jest --coverage --colors",
     "build:react": "webpack -d --watch",
     "start": "nodemon server/index.js",
+    "stress": "k6 run stressTests/getscript.js",
     "hoodData": "node --max-old-space-size=16000 database/seeding_schema/pgHoodData.js",
     "houseData": "node --max-old-space-size=16000 database/seeding_schema/pgHouseData.js"
   },
@@ -35,6 +36,7 @@
     "faker": "^4.1.0",
     "jquery": "^3.4.1",
     "mysql": "^2.18.1",
+    "newrelic": "^6.5.0",
     "pg-promise": "^10.5.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
