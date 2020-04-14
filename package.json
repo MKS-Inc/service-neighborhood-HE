@@ -11,7 +11,8 @@
     "start": "nodemon server/index.js",
     "stress": "k6 run stressTests/getscript.js",
     "hoodData": "node --max-old-space-size=16000 database/seeding_schema/pgHoodData.js",
-    "houseData": "node --max-old-space-size=16000 database/seeding_schema/pgHouseData.js"
+    "houseData": "node --max-old-space-size=16000 database/seeding_schema/pgHouseData.js",
+    "postgresEC2": "node database/ec2setup.js"
   },
   "repository": {
     "type": "git",

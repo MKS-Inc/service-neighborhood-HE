@@ -5,7 +5,7 @@ const faker = require('faker');
 
 const db = require('../database')
 
-const port = 5432;
+const port = 3001;
 const app = express();
 
 app.use(express.static(__dirname + '/../client/dist'));
