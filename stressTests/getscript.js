@@ -15,10 +15,10 @@ export default function() {
     let userid = Math.floor(Math.random() * Math.floor(10));
 
     for (let i = 0; i < 10; i++) {
-      http.get(`http://localhost:3001/api/neighborhood/1`);
+      http.get(`http://ec2-13-52-217-18.us-west-1.compute.amazonaws.com:3001/api/neighborhood/1`);
     }
 
-    http.post(`http://localhost:3001/api/likes/${userid}/${houseid}`)
+    http.post(`http://ec2-13-52-217-18.us-west-1.compute.amazonaws.com:3001/${userid}/${houseid}`)
 
 }
 
