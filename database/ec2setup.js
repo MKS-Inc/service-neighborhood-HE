@@ -2,8 +2,8 @@
 const pgp = require('pg-promise')(/*options*/)
 const QueryFile = require('pg-promise').QueryFile;
 const path = require('path');
-const connection = {host: 'ec2-54-183-161-27.us-west-1.compute.amazonaws.com', port: 5432,}
-const postgres = pgp(connection)
+const connection = require('../env');
+const postgres = pgp(connection.connection)
 postgres.connect();
 
 const schemaPath = path.join(__dirname, './seeding_schema/pgschema.sql');

@@ -1,6 +1,6 @@
 const pgp = require('pg-promise')(/* options */)
-const connection = {host: 'ec2-54-183-161-27.us-west-1.compute.amazonaws.com', port: 5432, user: 'postgres', password: '123', database: 'neighborhood_component'}
-const postgres = pgp(connection)
+const connection = require('../env');
+const postgres = pgp(connection.connection)
 postgres.connect();
 
 // get all neighborhood data
