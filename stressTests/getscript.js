@@ -2,8 +2,8 @@ const http = require('k6/http');
 
 export let options = {
   vus: 200,
-  rps: 1000,
-  duration: '10s',
+  // rps: 1000,
+  duration: '5m',
   discardResponseBodies: true,
 };
 
@@ -12,9 +12,9 @@ export default function() {
     // let hoodid = faker.random.number({ min: 1, max: 100000 });
     let hoodid = Math.floor(Math.random() * Math.floor(999999)) + 1;
     let houseid = Math.floor(Math.random() * Math.floor(10000000));
-    let userid = Math.floor(Math.random() * Math.floor(10));
+    let userid = Math.floor(Math.random() * Math.floor(9)) + 1;
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 20; i++) {
       http.get(`http://ec2-13-52-217-18.us-west-1.compute.amazonaws.com:3001/api/neighborhood/1`);
     }
 
