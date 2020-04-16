@@ -97,3 +97,8 @@ app.put('/api/users/:user_name', (req, res) => {
     }
   })
 })
+
+// loader.io
+app.get('/loaderio-5afd16bb7848b918aaba2081b1bd1015', (req, res) => {
+	res.send('loaderio-5afd16bb7848b918aaba2081b1bd1015');
+})
